@@ -1,0 +1,17 @@
+﻿@model IXBookRaterDLL.Models.ViewModel.ViewAllBooksViewModel
+
+    <div class="row">
+    <div class="col-4">
+</div>
+        <div class="col-4">
+
+@{
+    foreach (var book in Model.Books)
+    {
+        await Html.RenderPartialAsync("Viewbook", book);
+    }
+}
+        </div>
+    <div class="col-4">
+        </div>
+    </div>

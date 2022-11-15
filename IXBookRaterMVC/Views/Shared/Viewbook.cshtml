@@ -1,0 +1,38 @@
+﻿@model IXBookRaterDLL.Models.ViewModel.ViewBookViewModel
+<link href="Bootstrap/css/star-rating.css" rel="stylesheet" />
+
+        <form asp-action="Viewbook">
+
+    <div class="card" style="width: 18rem;">
+        <div class="card-body">
+            <h5 class="card-title">@Model.BookName</h5>
+            <h6 class="card-subtitle mb-2 text-muted">@Model.BookAuthor</h6>
+            @if (Model.IsRating)
+            {
+            <p class="card-text">@Model.BookAverageRating / 5</p>
+            <a asp-action="RateBook" asp-controller="Rating" asp-route-id="@Model.BookId" class="btn btn-primary">Submit</a>
+      @: is rating
+            }
+            else
+            {
+            <p class="card-text">@Model.BookAverageRating / 5</p>
+            <a asp-action="RateBook" asp-controller="Rating" asp-route-id="@Model.BookId" class="btn btn-success">Rate</a>
+      @: not rating
+            }
+  </div>
+    </div>
+        </form>
+  
+
+    <script src="Bootstrap/js/star-rating.js"></script>   
+<script>
+    $(document).ready(function () {
+        $("#input-21b").on("rating.change", function (event, value, caption) {
+            alert("You rated: " + value + " = " + $(caption).text());
+        });
+    });
+</script>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
