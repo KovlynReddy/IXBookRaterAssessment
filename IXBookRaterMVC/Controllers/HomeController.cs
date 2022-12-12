@@ -7,7 +7,7 @@ using System.Diagnostics;
 namespace IXBookRaterMVC.Controllers
 {
 
-    //[Authorize]
+   [Authorize]
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;

@@ -5,7 +5,7 @@ namespace IXBookApi.Data.Interface
 {
     public interface IRatingRepo
     {
-        public Rating AddRating();
+        public Rating AddRating(Rating newRating);
         public IEnumerable<Rating> GetAllRatings();
 
     }

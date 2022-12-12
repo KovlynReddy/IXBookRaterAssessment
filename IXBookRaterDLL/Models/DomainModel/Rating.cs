@@ -9,8 +9,8 @@ namespace IXBookRaterDLL.Models.DomainModel
 {
     public class Rating : BaseModel
     {
-        public string BookId { get; set; }
-        public string BookRating { get; set; }
-        public string UserId { get; set; }
+        public string BookId { get; set; } = "";
+        public string BookRating { get; set; } = "";
+        public string UserId { get; set; } = "";
     }
 }

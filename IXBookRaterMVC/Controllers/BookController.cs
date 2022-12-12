@@ -1,4 +1,5 @@
-﻿using IXBookRaterDLL.Models.ViewModel;
+﻿using IXBookRaterDLL.Models.Dto;
+using IXBookRaterDLL.Models.ViewModel;
 using IXBookRaterMVC.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -21,7 +22,11 @@ namespace IXBookRaterMVC.Controllers
         [HttpPost]
         public async Task<IActionResult> Create(CreateBookViewModel newBook)
         {
-            await BookRatingService.CreateBook(newBook);
+            var newBookDto = new CreateBookDto() { 
+            BookAuthor = newBook.BookAuthor,
+            BookName = newBook.BookName
+            };
+            await BookRatingService.CreateBook(newBookDto);
 
 
             return View();
@@ -29,23 +34,38 @@ namespace IXBookRaterMVC.Controllers
 
         public async Task<IActionResult> ViewAll() {
 
-            await BookRatingService.GetAllBookings();
+            var allBooks = await BookRatingService.GetAllBookings();
 
             ViewAllBooksViewModel model = new ViewAllBooksViewModel();
 
             List<ViewBookViewModel> books = new List<ViewBookViewModel>();
 
-            for (int i = 0; i < 5; i++)
+            foreach (var book in allBooks)
             {
-                var newBook = new ViewBookViewModel
-                {
-                    BookAuthor = $"Author{i}", 
-                    BookAverageRating =  (i%5).ToString(),
-                    BookId = i.ToString(),
-                    BookName = $"Boook{i}" 
+                ViewBookViewModel abook = new ViewBookViewModel() { 
+                BookAuthor = book.BookAuthor,
+                BookName = book.BookName,
+                BookAverageRating = book.BookAverageRating.ToString(),
+                BookId = book.BookGuid
                 };
 
-                books.Add(newBook);
+                books.Add(abook);
+            }
+
+            if (books.Count == 0)
+            {
+                for (int i = 0; i < 5; i++)
+                {
+                    var newBook = new ViewBookViewModel
+                    {
+                        BookAuthor = $"Author{i}",
+                        BookAverageRating = (i % 5).ToString(),
+                        BookId = i.ToString(),
+                        BookName = $"Boook{i}"
+                    };
+
+                    books.Add(newBook);
+                }
             }
 
             model.Books = books;

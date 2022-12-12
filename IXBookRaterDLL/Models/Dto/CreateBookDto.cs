@@ -8,9 +8,9 @@ namespace IXBookRaterDLL.Models.Dto
 {
     public class CreateBookDto
     {
-        public string BookGuid { get; set; }
-        public string BookName { get; set; }
-        public string BookAuthor { get; set; }
+        public string BookGuid { get; set; } = "";
+        public string BookName { get; set; } = "";
+        public string BookAuthor { get; set; } = "";
         public double BookAverageRating { get; set; }
     }
 }

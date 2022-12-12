@@ -1,21 +1,23 @@
 ﻿@model IXBookRaterDLL.Models.ViewModel.ViewBookViewModel
 <link href="Bootstrap/css/star-rating.css" rel="stylesheet" />
 
-        <form asp-action="Viewbook">
-
+        <form asp-controller="Rating" asp-action="RateBook">
+    <input asp-for="BookId" class="form-control" hidden />
+    <input asp-for="BookName" class="form-control" hidden />
+    <input asp-for="BookAuthor" class="form-control" hidden/>
     <div class="card" style="width: 18rem;">
         <div class="card-body">
             <h5 class="card-title">@Model.BookName</h5>
             <h6 class="card-subtitle mb-2 text-muted">@Model.BookAuthor</h6>
             @if (Model.IsRating)
             {
-            <p class="card-text">@Model.BookAverageRating / 5</p>
+                <p class="card-text"><input asp-for="BookAverageRating" class="form-control" /> / 5</p>
                 <div class="container">
                     <span id="rateMe1"></span>
                 </div>
 
-            <a asp-action="RateBook" asp-controller="Rating" asp-route-id="@Model.BookId" class="btn btn-primary">Submit</a>
-      @*@: is rating*@
+            <button type="submit" class="btn btn-primary">Submit</button>
+@*      @: is rating*@
             }
             else
             {
@@ -24,12 +26,12 @@
                     <span id="rateMe1"></span>
                 </div>
             <a asp-action="RateBook" asp-controller="Rating" asp-route-id="@Model.BookId" class="btn btn-success">Rate</a>
-     @* @: not rating*@
+  @*    @: not rating*@
             }
   </div>
     </div>
         </form>
-  
+
 
     <script src="Bootstrap/js/star-rating.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-star-rating/4.1.2/js/star-rating.min.js"></script>

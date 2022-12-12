@@ -11,9 +11,22 @@ namespace IXBookApi.Data.Repository
             _Db = db;
         }
 
-        public Rating AddRating()
+        public Rating AddRating(Rating newRating)
         {
-            throw new NotImplementedException();
+            _Db.Ratings.Add(newRating);
+            _Db.SaveChanges();
+
+            var currentBook = _Db.Books.FirstOrDefault(m=>m.BookGuid== newRating.BookId || m.ModelGuid==newRating.BookId);
+            var allRatings = _Db.Ratings.Where(m => m.BookId == newRating.BookId);
+
+            var averageRating = allRatings.Select(m=>Convert.ToInt32(m.BookRating)).ToList().Average();
+            currentBook.BookAverageRating = averageRating;
+            currentBook.LastUpdated = DateTime.Now;
+
+            _Db.Update(currentBook);
+            _Db.SaveChanges();
+
+            return newRating;
         }
 
         public IEnumerable<Rating> GetAllRatings()
